@@ -341,6 +341,8 @@ The initial live validation on `alpha` used:
 - Linux systemd services with separate directories and saves
 - Valheim `Resources → muchmore` accepted at startup
 
+See [docs/alpha-deployment.md](docs/alpha-deployment.md) for the non-secret instance map, migration record, and validation evidence.
+
 Primary upstream references:
 
 - [r2modman official repository](https://github.com/ebkr/r2modmanPlus)
