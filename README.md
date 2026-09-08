@@ -95,6 +95,8 @@ That is the complete player setup.
 
 ## Administrator guide
 
+For the planned Valheim 1.0 cutover, follow the [release-day runbook](docs/release-day-runbook.md). It records the canary order, mod/client gates, fallback path, validation, and rollback sequence for this specific five-server deployment.
+
 ### Client profile ownership and testing
 
 The administrator owns the canonical profile. It currently pins:
