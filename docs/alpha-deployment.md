@@ -8,11 +8,11 @@ This file records non-secret deployment state for the current `alpha` host. Pass
 
 | Instance | Display name | Base port | World | Service | Runtime state after setup |
 | --- | --- | ---: | --- | --- | --- |
-| `/home/jim/games/valheim` | Kujamaton | 2456 | Kujamaton | `valheim.service` | staged; disabled at boot |
-| `/home/jim/games/valheim2` | Satropolis | 2459 | Satropolis | `valheim2.service` | hub; disabled at boot |
-| `/home/jim/games/valheim3` | Randleton | 2462 | Randleton | `valheim3.service` | staged; disabled at boot |
-| `/home/jim/games/valheim4` | Lumiland | 2465 | Lumiland | `valheim4.service` | staged; disabled at boot |
-| `/home/jim/games/valheim5` | Everville | 2468 | Everville | `valheim5.service` | staged; disabled at boot |
+| `/home/jim/games/valheim` | Kujamaton | 2456 | Kujamaton | `valheim.service` | staged; inactive and disabled at boot |
+| `/home/jim/games/valheim2` | Satropolis | 2459 | Satropolis | `valheim2.service` | hub; inactive and disabled at boot |
+| `/home/jim/games/valheim3` | Randleton | 2462 | Randleton | `valheim3.service` | staged; inactive and disabled at boot |
+| `/home/jim/games/valheim4` | Lumiland | 2465 | Lumiland | `valheim4.service` | staged; inactive and disabled at boot |
+| `/home/jim/games/valheim5` | Everville | 2468 | Everville | `valheim5.service` | staged; inactive and disabled at boot |
 
 All instances use:
 
@@ -53,3 +53,17 @@ The repository is cloned at:
 ```
 
 Use that checkout as the source for future instance deployments. Pull and test repository updates before copying scripts into a server directory.
+
+## Five-instance staging migration
+
+On 2026-09-08, before the planned Valheim 1.0 cutover:
+
+1. Both active pilot services were stopped cleanly.
+2. Each instance's complete `saves/` tree was archived under its own backup directory with a SHA-256 sidecar. Every checksum and tar stream was verified before cleanup.
+3. The old live world copies and legacy BepInEx trees were removed. The save archives were retained.
+4. All five instance configs and systemd units were standardized to the table above, including public crossplay, 2× resources, and the mod-disable fallback.
+5. The current dedicated-server build and checksum-pinned mod stack were installed in all five directories.
+6. Static verification passed for all five instances, including exact script/lockfile parity with the host checkout and the administrator entry in each private save directory.
+7. No new world was generated. All five services remain stopped and disabled until the intended 1.0 rollout.
+
+The previous `latest-working` pointers for `valheim2` and `valheim3` were retained as `latest-working.pre-migration`. Create a new `backup-working` snapshot only after the new 1.0 world, client join, save/restart, and portal tests pass.

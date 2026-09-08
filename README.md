@@ -211,7 +211,13 @@ Set `MODS_ENABLED="0"` and restart the instance to launch clean Valheim without 
 
 Put one platform user ID per line in the instance save directory's `adminlist.txt`. For this layout that is `/home/jim/games/<instance>/saves/adminlist.txt`. Stop the service before editing it, then start the service again. Do not commit real IDs to this public repository.
 
-With crossplay enabled, confirm the ID shown for the player in the in-game player list or server log. Steam clients normally use their 17-digit SteamID64; other platforms use their own platform user ID.
+With crossplay enabled, use the exact case-sensitive ID shown in the in-game F2 player list or server log. Iron Gate documents the format as `[Platform]_[User ID]`; for a Steam client this is normally `Steam_<17-digit SteamID64>`.
+
+### World-seed privacy
+
+A dedicated server does not show its generated seed in the normal server browser or player UI, and only administrators should have filesystem access to its `.fwl` file. That is useful obscurity, but it is **not a security boundary**: the client receives world-generation data and PC-side tools or mods have historically been able to recover the seed. There is no vanilla server flag that guarantees the seed remains secret from a determined player.
+
+For this trusted-group setup, keep saves and backups private and ask players not to use seed/map-extraction tools. Do not add a seed-protection plugin unless its exact game-version compatibility is tested with the rest of the pinned profile.
 
 ### Install/update the server and pinned mods
 
@@ -368,6 +374,7 @@ See [docs/alpha-deployment.md](docs/alpha-deployment.md) for the non-secret inst
 
 Primary upstream references:
 
+- [Iron Gate dedicated-server guide](https://www.valheimgame.com/support/a-guide-to-dedicated-servers/)
 - [r2modman official repository](https://github.com/ebkr/r2modmanPlus)
 - [r2modman on Thunderstore](https://thunderstore.io/c/valheim/p/ebkr/r2modman/)
 - [BepInExPack Valheim](https://thunderstore.io/c/valheim/p/denikson/BepInExPack_Valheim/)
