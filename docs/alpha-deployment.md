@@ -8,10 +8,13 @@ This file records non-secret deployment state for the current `alpha` host. Pass
 
 | Instance | Display name | Base port | World | Service | Runtime state after setup |
 | --- | --- | ---: | --- | --- | --- |
-| `/home/jim/games/valheim2` | Origin | 2459 | Dedicated | `valheim2.service` | active; disabled at boot |
-| `/home/jim/games/valheim3` | DanHammer | 2462 | Dedicated | `valheim3.service` | active; disabled at boot |
+| `/home/jim/games/valheim` | Kujamaton | 2456 | Kujamaton | `valheim.service` | staged; disabled at boot |
+| `/home/jim/games/valheim2` | Satropolis | 2459 | Satropolis | `valheim2.service` | hub; disabled at boot |
+| `/home/jim/games/valheim3` | Randleton | 2462 | Randleton | `valheim3.service` | staged; disabled at boot |
+| `/home/jim/games/valheim4` | Lumiland | 2465 | Lumiland | `valheim4.service` | staged; disabled at boot |
+| `/home/jim/games/valheim5` | Everville | 2468 | Everville | `valheim5.service` | staged; disabled at boot |
 
-Both instances use:
+All instances use:
 
 - Valheim Dedicated Server build `21981590` (`l-0.221.12`, network version 36)
 - BepInExPack Valheim `5.4.2333`
@@ -19,9 +22,10 @@ Both instances use:
 - `SERVER_PUBLIC=1`
 - `CROSSPLAY=1`
 - `RESOURCE_PRESET=muchmore` (the broad built-in 2× resource modifier)
+- `MODS_ENABLED=1` under normal operation; set to `0` for a clean-game fallback
 - backups under `/home/jim/games/valheim-backups/<instance>/`
 
-The two deployed runtime scripts and mod lockfiles were SHA-256-compared to commit `de8cb3a4835003f0e08f926f009c869c7133c47f` before this record was written.
+The deployed runtime scripts and mod lockfiles are SHA-256-compared to the host checkout during migration and verification.
 
 ## Validation performed
 

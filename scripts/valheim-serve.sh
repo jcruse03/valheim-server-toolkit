@@ -39,19 +39,28 @@ source "$CONFIG_FILE"
   printf 'ERROR: CROSSPLAY must be 0 or 1.\n' >&2
   exit 1
 }
+[[ "${MODS_ENABLED:-1}" =~ ^[01]$ ]] || {
+  printf 'ERROR: MODS_ENABLED must be 0 or 1.\n' >&2
+  exit 1
+}
 
 cd "$SERVER_DIR"
 mkdir -p "$SAVE_DIR"
 
-[[ -f "$SERVER_DIR/BepInEx/core/BepInEx.Preloader.dll" ]] || {
-  printf 'ERROR: BepInEx is not installed. Run ./valheim-maintain.sh install first.\n' >&2
-  exit 1
-}
-
-export DOORSTOP_ENABLED=1
-export DOORSTOP_TARGET_ASSEMBLY="$SERVER_DIR/BepInEx/core/BepInEx.Preloader.dll"
-export LD_LIBRARY_PATH="$SERVER_DIR/doorstop_libs:$SERVER_DIR/linux64:${LD_LIBRARY_PATH:-}"
-export LD_PRELOAD="libdoorstop_x64.so${LD_PRELOAD:+:$LD_PRELOAD}"
+if [[ "${MODS_ENABLED:-1}" == "1" ]]; then
+  [[ -f "$SERVER_DIR/BepInEx/core/BepInEx.Preloader.dll" ]] || {
+    printf 'ERROR: BepInEx is not installed. Run ./valheim-maintain.sh install first.\n' >&2
+    exit 1
+  }
+  export DOORSTOP_ENABLED=1
+  export DOORSTOP_TARGET_ASSEMBLY="$SERVER_DIR/BepInEx/core/BepInEx.Preloader.dll"
+  export LD_LIBRARY_PATH="$SERVER_DIR/doorstop_libs:$SERVER_DIR/linux64:${LD_LIBRARY_PATH:-}"
+  export LD_PRELOAD="libdoorstop_x64.so${LD_PRELOAD:+:$LD_PRELOAD}"
+else
+  export DOORSTOP_ENABLED=0
+  export LD_LIBRARY_PATH="$SERVER_DIR/linux64:${LD_LIBRARY_PATH:-}"
+  unset DOORSTOP_TARGET_ASSEMBLY LD_PRELOAD
+fi
 export SteamAppId=892970
 export SteamAppID=892970
 
@@ -74,8 +83,8 @@ if [[ -n "${RESOURCE_PRESET:-}" ]]; then
   args+=(-modifier Resources "$RESOURCE_PRESET")
 fi
 
-printf 'Starting %s on port %s with world %s (crossplay: %s, public: %s, resources: %s)\n' \
-  "$SERVER_NAME" "$SERVER_PORT" "$WORLD_NAME" "${CROSSPLAY:-1}" \
-  "${SERVER_PUBLIC:-1}" "${RESOURCE_PRESET:-standard}"
+printf 'Starting %s on port %s with world %s (mods: %s, crossplay: %s, public: %s, resources: %s)\n' \
+  "$SERVER_NAME" "$SERVER_PORT" "$WORLD_NAME" "${MODS_ENABLED:-1}" \
+  "${CROSSPLAY:-1}" "${SERVER_PUBLIC:-1}" "${RESOURCE_PRESET:-standard}"
 
 exec "$SERVER_DIR/valheim_server.x86_64" "${args[@]}"

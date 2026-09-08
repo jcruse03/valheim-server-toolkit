@@ -197,12 +197,21 @@ $EDITOR /home/jim/games/valheim4/valheim.env
 Set a unique `SERVER_NAME`, `SERVER_PORT`, `WORLD_NAME`, `SERVER_PASSWORD`, and `SAVE_DIR`. Defaults enable crossplay, public discovery, and the broad 2× resource preset:
 
 ```bash
+MODS_ENABLED="1"
 SERVER_PUBLIC="1"
 CROSSPLAY="1"
 RESOURCE_PRESET="muchmore"
 ```
 
 `muchmore` is Valheim's built-in 2× **global resource-rate** modifier. It is intentionally simple but is not limited to lumber, stone, or construction materials. A later material-specific plugin can replace it after compatibility testing.
+
+Set `MODS_ENABLED="0"` and restart the instance to launch clean Valheim without loading BepInEx. This provides a quick fallback after a major game update while leaving the pinned mod files intact for later testing. Cross-server portals are unavailable while mods are disabled.
+
+### Server administrators
+
+Put one platform user ID per line in the instance save directory's `adminlist.txt`. For this layout that is `/home/jim/games/<instance>/saves/adminlist.txt`. Stop the service before editing it, then start the service again. Do not commit real IDs to this public repository.
+
+With crossplay enabled, confirm the ID shown for the player in the in-game player list or server log. Steam clients normally use their 17-digit SteamID64; other platforms use their own platform user ID.
 
 ### Install/update the server and pinned mods
 
