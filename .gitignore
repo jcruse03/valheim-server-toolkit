@@ -1,0 +1,14 @@
+# Secrets and runtime state
+valheim.env
+*.tar.gz
+*.sha256
+latest-working
+saves/
+BepInEx/
+.valheim-mod-versions
+.valheim-maintain.lock
+
+# Editors and operating systems
+.idea/
+.vscode/
+.DS_Store

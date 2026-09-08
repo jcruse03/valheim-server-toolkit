@@ -1,0 +1,18 @@
+[tools]
+shellcheck = "0.11.0"
+
+[tasks.syntax]
+description = "Check Bash syntax"
+run = "bash -n scripts/*.sh tests/*.sh"
+
+[tasks.test]
+description = "Exercise backup, known-working pointer, and restore"
+run = "./tests/test-maintain.sh"
+
+[tasks.lint]
+description = "Lint Bash scripts"
+run = "shellcheck scripts/*.sh tests/*.sh"
+
+[tasks.check]
+description = "Run syntax, tests, and lint"
+depends = ["syntax", "test", "lint"]
