@@ -1,5 +1,7 @@
 # Valheim multi-server toolkit
 
+> **Specific setup; no support:** This repository documents one private group's Valheim setup. Feel free to use or adapt it, but no support is provided.
+
 Reproducible client and Linux dedicated-server setup for a small trusted group using:
 
 - Valheim's built-in crossplay backend
@@ -12,7 +14,7 @@ Reproducible client and Linux dedicated-server setup for a small trusted group u
 
 ## Player quick start
 
-Cross Server Portals must be installed on every PC client that needs to travel through a cross-server portal. Console players can join these crossplay-enabled servers but cannot install BepInEx plugins, so they must change servers manually.
+PC players should import the prepared r2modman profile below. It already contains the exact BepInEx and Cross Server Portals versions used by the servers. Do not install, remove, or update individual mods.
 
 ### 1. Install Valheim and run it once
 
@@ -25,7 +27,7 @@ Use only one of r2modman's two official distribution locations:
 - [r2modman on Thunderstore](https://thunderstore.io/c/valheim/p/ebkr/r2modman/)
 - [official r2modman GitHub releases](https://github.com/ebkr/r2modmanPlus/releases/latest)
 
-The current release verified while writing this guide was **3.2.19**. A newer official release is fine; the *mod versions* below must remain pinned.
+The current release verified while writing this guide was **3.2.19**. A newer official r2modman release is fine; the imported Valheim mods must remain pinned.
 
 #### Windows
 
@@ -36,7 +38,7 @@ The current release verified while writing this guide was **3.2.19**. A newer of
 
 The portable build also works, but the setup executable is the least confusing option for most players.
 
-#### Linux desktop
+#### Linux desktop and Steam Deck
 
 Flatpak is the upstream-recommended path:
 
@@ -56,9 +58,7 @@ chmod +x r2modman-*.AppImage
 
 Do not run the Windows `.exe` through Wine. If r2modman cannot launch native Valheim and offers the documented Proton workaround, create an empty `.forceproton` file in the Valheim game directory.
 
-#### Steam Deck
-
-Switch to Desktop Mode, install the Flatpak using the Linux commands above, select Valheim, and use r2modman's Steam Deck/Game Mode integration if desired. Flatpak is the supported route for Game Mode.
+On Steam Deck, switch to Desktop Mode and use the Flatpak commands above. Flatpak is the supported route for Game Mode.
 
 #### macOS
 
@@ -66,46 +66,64 @@ r2modman's upstream installation documentation currently publishes Windows and L
 
 #### Xbox and other console clients
 
-No client-side BepInEx installation is possible. Players can join through Valheim crossplay and use ordinary in-world portals, but a Cross Server Portal cannot transfer their client. They must disconnect and select the other server normally.
+No client-side BepInEx installation is possible. Console players can join through Valheim crossplay and use ordinary portals, but Cross Server Portals cannot transfer them between servers. They must change servers manually.
 
-### 3. Create the group profile
+### 3. Import the prepared profile
 
 1. In r2modman, select **Valheim**.
-2. Create a new profile named something recognizable, such as `Jim's Valheim Group`.
-3. Open **Online** and install these exact packages:
-   - `denikson-BepInExPack_Valheim` version **5.4.2333**
-   - `lunarbin-Cross_Server_Portals` version **1.2.0**
-4. Do not click **Update all** unless the server lockfile has been intentionally updated and tested.
-5. Click **Start modded**.
+2. On the profile selection screen, choose **Import/Update**.
+3. Choose **Import new profile** and **From code**.
+4. Paste this profile code:
 
-The first launch creates BepInEx configuration files. No client config changes are required for the initial test.
+```text
+01a08277-5cba-d563-ebe0-7a6a3419a093
+```
 
-### 4. Connect and test
+5. Complete the import and select the imported profile.
+6. Do **not** use **Update all** or change its mods.
 
-Use Valheim's server browser, join code, or public IP plus base port. These servers use the crossplay backend, so a local or loopback IP such as `127.0.0.1` is not valid for joining; use the public address/join flow.
+### 4. Play
 
-Test in this order:
+1. Click **Start modded** in r2modman.
+2. Join the server using the name, join code, or public address supplied by the administrator.
+3. Enter the server password supplied privately.
+4. Use the administrator-created portals normally.
 
-1. Join each server directly.
-2. Confirm normal inventory and character persistence.
-3. Create paired portals with the syntax below.
-4. Traverse in each direction.
-5. Restart both servers and repeat.
+That is the complete player setup.
 
-### 5. Export the tested profile for the group
+---
 
-After the profile works:
+## Administrator guide
 
-1. Open r2modman **Settings** for the profile.
+### Client profile ownership and testing
+
+The administrator owns the canonical profile. It currently pins:
+
+- `denikson-BepInExPack_Valheim` version **5.4.2333**
+- `lunarbin-Cross_Server_Portals` version **1.2.0**
+
+Before publishing a replacement profile code:
+
+1. Import or build the candidate profile on a clean client.
+2. Join each server directly.
+3. Confirm normal inventory and character persistence.
+4. Traverse every cross-server portal in both directions.
+5. Restart both servers and repeat the join and portal tests.
+6. Confirm server and client BepInEx logs contain no new fatal errors.
+
+After the profile passes:
+
+1. Open r2modman **Settings** for the tested profile.
 2. Open the **Profile** section.
-3. Choose **Export profile as code** (or export as a file for an offline copy).
-4. Publish the code in the group's private channel and record it in a release note.
+3. Choose **Export profile as code** and keep a file export as an offline copy.
+4. Replace the code in **Player quick start** with the new code.
+5. Commit the lockfile/profile documentation change and notify players to re-import.
 
-Other players select Valheim in r2modman, choose **Import/Update**, paste the code, and launch that imported profile with **Start modded**. An export includes the mod list and profile configuration; it does not include characters or world saves.
+An export includes the mod list and profile configuration; it does not include characters or world saves.
 
-## Cross-server portals
+### Cross-server portal setup
 
-Name a portal using one of the plugin's formats:
+Players are not expected to create or configure cross-server portals. An administrator names each portal using one of these formats:
 
 ```text
 SourceTag|ServerOrPublicIP:Port|TargetTag
@@ -128,11 +146,7 @@ The server-generated plugin config is `BepInEx/config/lunarbin.games.valheim.cfg
 
 Cross Server Portals predates Valheim 1.0 and has no official Iron Gate compatibility guarantee. Its current version was runtime-tested by this project against dedicated-server build `21981590`; repeat the smoke test after any game update.
 
----
-
-## Server administrator guide
-
-### Design
+### Server design
 
 Each instance is independent:
 
