@@ -1,6 +1,6 @@
 # Pinned and checksum-verified Thunderstore packages.
 # Update versions and checksums together, then test before deployment.
-BEPINEX_VERSION="5.4.2333"
-BEPINEX_SHA256="5dd24ccbcaa9260f714b200f23c4c15547e2aa5f06906cafcc0dee56db1bf716"
+BEPINEX_VERSION="5.4.2350"
+BEPINEX_SHA256="37a91c000b4e88f2ed7a4bd7d812239852d2e36cbf0ff0a9f5faacfba46b105f"
 PORTAL_VERSION="1.2.0"
 PORTAL_SHA256="addca8a3ce85c77d538531f05ff681a98522d31d00feb6b3dfdbc07784e386d6"
