@@ -23,6 +23,20 @@ Do not update every instance at once. Prove the complete server/client stack on 
 
 The public address and password remain private and are distributed separately.
 
+## Release-day result (2026-09-09)
+
+- Steam public build `25185644` runs as Valheim `l-1.0.7` (network version
+  39).
+- Satropolis passed vanilla join, save, restart, rejoin, PlayFab registration,
+  and world-persistence checks. It remains the only active server.
+- BepInExPack `5.4.2350` loads successfully under Unity `6000.0.75f1`.
+- Cross Server Portals `1.2.0` is not compatible: its startup patch throws
+  `MissingMethodException` for `ZDOMan.GetPortals()`.
+- The failed modded Kujamaton canary was stopped. Do not publish a client
+  profile or enable mods on Satropolis until the portal plugin is updated and
+  the full canary is repeated.
+- The current resource policy is `Resources=more` (1.5×).
+
 ## Phase 1: establish the release and compatibility gates
 
 - [ ] Confirm Steam has delivered the final Valheim 1.0 build, not a preload or transitional depot.
@@ -65,7 +79,7 @@ Required server-side evidence:
 - [ ] BepInEx loaded without a fatal exception.
 - [ ] Exactly the intended Cross Server Portals plugin loaded.
 - [ ] Public PlayFab registration completed.
-- [ ] The 2x `Resources=muchmore` modifier was accepted.
+- [ ] The 1.5x `Resources=more` modifier was accepted.
 - [ ] No unexpected old plugin or configuration survived migration.
 
 ## Phase 2B: vanilla fallback

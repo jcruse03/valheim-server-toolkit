@@ -5,16 +5,22 @@
 Reproducible client and Linux dedicated-server setup for a small trusted group using:
 
 - Valheim's built-in crossplay backend
-- BepInExPack for Valheim **5.4.2333**
+- BepInExPack for Valheim **5.4.2350**
 - Cross Server Portals **1.2.0**
-- Valheim's built-in **2× resource** world modifier
+- Valheim's built-in **1.5× resource** world modifier
 - independent worlds, saves, ports, systemd services, and backups per server
 
 > **Version boundary:** Valheim mods are binary plugins without official Iron Gate support. Do not update Valheim, BepInEx, or a plugin independently on production servers. Test the complete pinned set first and keep a known-working backup.
 
+> **Valheim 1.0 compatibility hold (2026-09-09):** BepInExPack 5.4.2350
+> loads on Valheim 1.0, but Cross Server Portals 1.2.0 fails because the game
+> removed or changed `ZDOMan.GetPortals()`. Satropolis therefore remains
+> vanilla, and no 1.0-compatible player profile has been published.
+
 ## Player quick start
 
-PC players should import the prepared r2modman profile below. It already contains the exact BepInEx and Cross Server Portals versions used by the servers. Do not install, remove, or update individual mods.
+Wait for the administrator to publish a tested Valheim 1.0 profile before
+following this section. Do not install, remove, or update individual mods.
 
 ### 1. Install Valheim and run it once
 
@@ -73,12 +79,8 @@ No client-side BepInEx installation is possible. Console players can join throug
 1. In r2modman, select **Valheim**.
 2. On the profile selection screen, choose **Import/Update**.
 3. Choose **Import new profile** and **From code**.
-4. Paste this profile code:
-
-```text
-01a08277-5cba-d563-ebe0-7a6a3419a093
-```
-
+4. Paste the current profile code supplied by the administrator. The pre-1.0
+   code is retired and intentionally no longer published here.
 5. Complete the import and select the imported profile.
 6. Do **not** use **Update all** or change its mods.
 
@@ -101,7 +103,7 @@ For the planned Valheim 1.0 cutover, follow the [release-day runbook](docs/relea
 
 The administrator owns the canonical profile. It currently pins:
 
-- `denikson-BepInExPack_Valheim` version **5.4.2333**
+- `denikson-BepInExPack_Valheim` version **5.4.2350**
 - `lunarbin-Cross_Server_Portals` version **1.2.0**
 
 Before publishing a replacement profile code:
@@ -196,16 +198,16 @@ chmod 600 /home/jim/games/valheim4/valheim.env
 $EDITOR /home/jim/games/valheim4/valheim.env
 ```
 
-Set a unique `SERVER_NAME`, `SERVER_PORT`, `WORLD_NAME`, `SERVER_PASSWORD`, and `SAVE_DIR`. Defaults enable crossplay, public discovery, and the broad 2× resource preset:
+Set a unique `SERVER_NAME`, `SERVER_PORT`, `WORLD_NAME`, `SERVER_PASSWORD`, and `SAVE_DIR`. Defaults enable crossplay, public discovery, and the broad 1.5× resource preset:
 
 ```bash
 MODS_ENABLED="1"
 SERVER_PUBLIC="1"
 CROSSPLAY="1"
-RESOURCE_PRESET="muchmore"
+RESOURCE_PRESET="more"
 ```
 
-`muchmore` is Valheim's built-in 2× **global resource-rate** modifier. It is intentionally simple but is not limited to lumber, stone, or construction materials. A later material-specific plugin can replace it after compatibility testing.
+`more` is Valheim's built-in 1.5× **global resource-rate** modifier. It is intentionally simple but is not limited to lumber, stone, or construction materials. A later material-specific plugin can replace it after compatibility testing.
 
 Set `MODS_ENABLED="0"` and restart the instance to launch clean Valheim without loading BepInEx. This provides a quick fallback after a major game update while leaving the pinned mod files intact for later testing. Cross-server portals are unavailable while mods are disabled.
 
@@ -364,13 +366,14 @@ Expected: the feature requires the BepInEx plugin on the client. The player must
 
 ## Verified deployment
 
-The initial live validation on `alpha` used:
+The pre-1.0 live validation on `alpha` used dedicated-server build `21981590`,
+BepInExPack Valheim `5.4.2333`, Cross Server Portals `1.2.0`, and the
+`Resources → muchmore` modifier.
 
-- dedicated-server build `21981590`
-- BepInExPack Valheim `5.4.2333`
-- Cross Server Portals `1.2.0`
-- Linux systemd services with separate directories and saves
-- Valheim `Resources → muchmore` accepted at startup
+The Valheim 1.0 validation uses dedicated-server build `25185644`. Satropolis
+passes in vanilla mode with `Resources → more`. In the isolated Kujamaton mod
+canary, BepInExPack `5.4.2350` loads but Cross Server Portals `1.2.0` fails
+against the changed game API, so the 1.0 modded stack is not yet approved.
 
 See [docs/alpha-deployment.md](docs/alpha-deployment.md) for the non-secret instance map, migration record, and validation evidence.
 
