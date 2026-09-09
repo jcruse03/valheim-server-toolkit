@@ -78,6 +78,8 @@ load_mod_lock() {
   source "$MOD_LOCK_FILE"
   : "${BEPINEX_VERSION:?Missing BEPINEX_VERSION in $MOD_LOCK_FILE}"
   : "${BEPINEX_SHA256:?Missing BEPINEX_SHA256 in $MOD_LOCK_FILE}"
+  : "${PORTAL_NAMESPACE:?Missing PORTAL_NAMESPACE in $MOD_LOCK_FILE}"
+  : "${PORTAL_PACKAGE:?Missing PORTAL_PACKAGE in $MOD_LOCK_FILE}"
   : "${PORTAL_VERSION:?Missing PORTAL_VERSION in $MOD_LOCK_FILE}"
   : "${PORTAL_SHA256:?Missing PORTAL_SHA256 in $MOD_LOCK_FILE}"
 }
@@ -228,11 +230,11 @@ install_mod_stack() {
   require_command unzip
 
   bepinex_url="https://thunderstore.io/package/download/denikson/BepInExPack_Valheim/${BEPINEX_VERSION}/"
-  portal_url="https://thunderstore.io/package/download/lunarbin/Cross_Server_Portals/${PORTAL_VERSION}/"
+  portal_url="https://thunderstore.io/package/download/${PORTAL_NAMESPACE}/${PORTAL_PACKAGE}/${PORTAL_VERSION}/"
   temp_dir="$(mktemp -d -t "${INSTANCE}-mods.XXXXXXXX")"
   trap 'rm -rf -- "$temp_dir"' EXIT
   bepinex_zip="$temp_dir/BepInExPack_Valheim-${BEPINEX_VERSION}.zip"
-  portal_zip="$temp_dir/Cross_Server_Portals-${PORTAL_VERSION}.zip"
+  portal_zip="$temp_dir/${PORTAL_PACKAGE}-${PORTAL_VERSION}.zip"
 
   log "Downloading pinned BepInExPack $BEPINEX_VERSION"
   download_and_verify "$bepinex_url" "$bepinex_zip" "$BEPINEX_SHA256"
@@ -244,7 +246,7 @@ install_mod_stack() {
   cp -a "$bepinex_source/." "$SERVER_DIR/"
   chmod u+x "$SERVER_DIR/start_server_bepinex.sh" "$SERVER_DIR/start_game_bepinex.sh"
 
-  log "Downloading pinned Cross Server Portals $PORTAL_VERSION"
+  log "Downloading pinned ${PORTAL_NAMESPACE}-${PORTAL_PACKAGE} $PORTAL_VERSION"
   download_and_verify "$portal_url" "$portal_zip" "$PORTAL_SHA256"
   unzip -q "$portal_zip" -d "$temp_dir/portal"
   [[ -f "$temp_dir/portal/ValheimCrossServerPortals.dll" ]] || die "Unexpected portal archive layout"
@@ -257,6 +259,8 @@ install_mod_stack() {
     printf 'BepInExPack_Valheim=%s\n' "$BEPINEX_VERSION"
     printf 'BepInExPack_Valheim_archive_sha256=%s\n' "$BEPINEX_SHA256"
     printf 'Cross_Server_Portals=%s\n' "$PORTAL_VERSION"
+    printf 'Cross_Server_Portals_namespace=%s\n' "$PORTAL_NAMESPACE"
+    printf 'Cross_Server_Portals_package=%s\n' "$PORTAL_PACKAGE"
     printf 'Cross_Server_Portals_archive_sha256=%s\n' "$PORTAL_SHA256"
     printf 'installed=%s\n' "$(date --iso-8601=seconds)"
   } >"$SERVER_DIR/.valheim-mod-versions.tmp"

@@ -2,5 +2,7 @@
 # Update versions and checksums together, then test before deployment.
 BEPINEX_VERSION="5.4.2350"
 BEPINEX_SHA256="37a91c000b4e88f2ed7a4bd7d812239852d2e36cbf0ff0a9f5faacfba46b105f"
-PORTAL_VERSION="1.2.0"
-PORTAL_SHA256="addca8a3ce85c77d538531f05ff681a98522d31d00feb6b3dfdbc07784e386d6"
+PORTAL_NAMESPACE="jcruse03"
+PORTAL_PACKAGE="Cross_Server_Portals_Continued"
+PORTAL_VERSION="1.3.1"
+PORTAL_SHA256="427b9e523101979ee65debf3a2893bda4b27a606aab32adf04fd50da10317707"
