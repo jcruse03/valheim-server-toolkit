@@ -6,21 +6,19 @@ Reproducible client and Linux dedicated-server setup for a small trusted group u
 
 - Valheim's built-in crossplay backend
 - BepInExPack for Valheim **5.4.2350**
-- Cross Server Portals **1.2.0**
+- Cross Server Portals Continued **1.3.1**
 - Valheim's built-in **1.5× resource** world modifier
 - independent worlds, saves, ports, systemd services, and backups per server
 
 > **Version boundary:** Valheim mods are binary plugins without official Iron Gate support. Do not update Valheim, BepInEx, or a plugin independently on production servers. Test the complete pinned set first and keep a known-working backup.
 
-> **Valheim 1.0 compatibility hold (2026-09-09):** BepInExPack 5.4.2350
-> loads on Valheim 1.0, but Cross Server Portals 1.2.0 fails because the game
-> removed or changed `ZDOMan.GetPortals()`. Satropolis therefore remains
-> vanilla, and no 1.0-compatible player profile has been published.
+> **Valheim 1.0 validated stack (2026-09-09):** BepInExPack 5.4.2350 and
+> Cross Server Portals Continued 1.3.1 have passed direct joins and two-way
+> portal traversal between the group's Valheim 1.0 servers.
 
 ## Player quick start
 
-Wait for the administrator to publish a tested Valheim 1.0 profile before
-following this section. Do not install, remove, or update individual mods.
+Use the tested profile below. Do not install, remove, or update individual mods.
 
 ### 1. Install Valheim and run it once
 
@@ -79,8 +77,7 @@ No client-side BepInEx installation is possible. Console players can join throug
 1. In r2modman, select **Valheim**.
 2. On the profile selection screen, choose **Import/Update**.
 3. Choose **Import new profile** and **From code**.
-4. Paste the current profile code supplied by the administrator. The pre-1.0
-   code is retired and intentionally no longer published here.
+4. Paste this current profile code: `01a087f1-5ef1-7280-e363-86332c59d362`
 5. Complete the import and select the imported profile.
 6. Do **not** use **Update all** or change its mods.
 
@@ -104,7 +101,7 @@ For the planned Valheim 1.0 cutover, follow the [release-day runbook](docs/relea
 The administrator owns the canonical profile. It currently pins:
 
 - `denikson-BepInExPack_Valheim` version **5.4.2350**
-- `lunarbin-Cross_Server_Portals` version **1.2.0**
+- `jcruse03-Cross_Server_Portals_Continued` version **1.3.1**
 
 Before publishing a replacement profile code:
 
@@ -148,7 +145,7 @@ origin-return|valheim.example.net:2459|resources
 
 The server-generated plugin config is `BepInEx/config/lunarbin.games.valheim.cfg`. `RequireAdminToRename` defaults to `true`; only an administrator can apply a tag containing `|` unless that setting is changed on the server.
 
-Cross Server Portals predates Valheim 1.0 and has no official Iron Gate compatibility guarantee. Its current version was runtime-tested by this project against dedicated-server build `21981590`; repeat the smoke test after any game update.
+Cross Server Portals Continued is an attributed, maintained fork of LunarBin's original plugin. Version 1.3.1 was runtime-tested by this project against Valheim 1.0 dedicated-server build `25185644`; repeat the smoke test after any game update.
 
 ### Server design
 
@@ -370,10 +367,11 @@ The pre-1.0 live validation on `alpha` used dedicated-server build `21981590`,
 BepInExPack Valheim `5.4.2333`, Cross Server Portals `1.2.0`, and the
 `Resources → muchmore` modifier.
 
-The Valheim 1.0 validation uses dedicated-server build `25185644`. Satropolis
-passes in vanilla mode with `Resources → more`. In the isolated Kujamaton mod
-canary, BepInExPack `5.4.2350` loads but Cross Server Portals `1.2.0` fails
-against the changed game API, so the 1.0 modded stack is not yet approved.
+The Valheim 1.0 validation uses dedicated-server build `25185644`, BepInExPack
+`5.4.2350`, and Cross Server Portals Continued `1.3.1`. Direct joins and
+two-way portal traversal passed between Kujamaton and Everville; Satropolis is
+also running the same checksum-verified stack. All three retain the
+`Resources → more` modifier.
 
 See [docs/alpha-deployment.md](docs/alpha-deployment.md) for the non-secret instance map, migration record, and validation evidence.
 
@@ -383,8 +381,9 @@ Primary upstream references:
 - [r2modman official repository](https://github.com/ebkr/r2modmanPlus)
 - [r2modman on Thunderstore](https://thunderstore.io/c/valheim/p/ebkr/r2modman/)
 - [BepInExPack Valheim](https://thunderstore.io/c/valheim/p/denikson/BepInExPack_Valheim/)
-- [Cross Server Portals source](https://github.com/lunar91/CrossServerPortals)
-- [Cross Server Portals on Thunderstore](https://thunderstore.io/c/valheim/p/lunarbin/Cross_Server_Portals/)
+- [Cross Server Portals Continued source](https://github.com/jcruse03/CrossServerPortals-Continued)
+- [Cross Server Portals Continued on Thunderstore](https://thunderstore.io/c/valheim/p/jcruse03/Cross_Server_Portals_Continued/)
+- [Original Cross Server Portals source by LunarBin](https://github.com/lunar91/CrossServerPortals)
 
 ## License
 
