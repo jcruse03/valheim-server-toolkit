@@ -191,19 +191,25 @@ every time.
 1. On Linux desktop and Steam Deck, open r2modman's **Settings**, search for
    **Change launch behaviour**, choose **Native**, and click **Update**. Windows
    users can skip this item.
-2. In r2modman, select **Help** on the left and stay on the **General** tab.
-3. Scroll all the way to the bottom to **Launching the game from outside the
+2. If r2modman was previously set to **Proton**, or **Auto** had detected
+   Proton, return to the profile and click **Start modded** once. Confirm the
+   mods load, close Valheim, and return to r2modman. This refreshes the native
+   launch argument shown in Help.
+3. In r2modman, select **Help** on the left and stay on the **General** tab.
+4. Scroll all the way to the bottom to **Launching the game from outside the
    mod manager**. Click the **Copy launch arguments** button there.
 
 > **Use the bottom Help entry—not the first launch option r2modman shows during
 > Linux setup.** The first option only installs r2modman's wrapper. The Help
 > entry is generated after selecting the game and profile, so it includes the
-> complete BepInEx loader and active-profile arguments.
+> complete BepInEx loader and active-profile arguments. If you changed the
+> launch behavior to Native, copy this argument again even if you copied it
+> earlier.
 
-4. Open **Steam → Library → Valheim → gear icon → Properties → General**.
-5. Click the **Launch Options** box, delete anything already in it, and paste
+5. Open **Steam → Library → Valheim → gear icon → Properties → General**.
+6. Click the **Launch Options** box, delete anything already in it, and paste
    the complete line copied from the bottom of r2modman's Help page.
-6. Close r2modman.
+7. Close r2modman.
 
 From now on:
 
