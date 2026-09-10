@@ -115,7 +115,7 @@ Stop here; the remaining modded-client steps do not apply on consoles.
 
 1. On Valheim's profile selection screen, choose **Import/Update**.
 2. Choose **Import new profile** and **From code**.
-3. Paste this current profile code: `01a08d15-a31b-20d9-5668-01dda14635a6`
+3. Paste this current profile code: `01a08d20-8615-f7de-8d51-dd4088b39c4c`
 4. Complete the import. The profile you just created should be highlighted in
    blue; click it once if it is not.
 5. Click **Select profile** in the lower-left corner.
@@ -131,17 +131,6 @@ PortalPass is intentionally installed separately from the shared profile:
 2. Search for `PortalPass` by `jcruse03`.
 3. Open it, click **Download**, and choose **Download with dependencies**.
 4. Return to **Installed** and confirm PortalPass is enabled.
-
-The shared profile archive still contains the original exporter's PortalPass
-configuration, so replace its file path with the correct path for your computer:
-
-1. Select **Config editor** on the left side of the profile screen.
-2. Search for and open `com.jcruse03.portalpass.cfg`.
-3. Find **SecretFilePath** and set it to the path for your platform:
-   - Windows: `%LOCALAPPDATA%\PortalPass\passwords.env`
-   - Linux desktop: `~/.config/portalpass/passwords.env`
-   - Steam Deck: `/home/deck/.config/portalpass/passwords.env`
-4. Save the configuration.
 
 PortalPass reads a password file that you create and control. For this group's
 servers, add only the shared public server IP and the normal password supplied
