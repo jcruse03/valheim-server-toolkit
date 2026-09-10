@@ -91,10 +91,8 @@ When r2modman shows the profile selection screen, continue with
 5. If r2modman displays Steam launch options, click its copy button. Open the
    Steam desktop app, select **Library → Valheim → gear icon → Properties →
    General**, click the **Launch Options** box, and paste the copied text.
-6. In the Steam desktop app, select **Games → Add a Non-Steam Game to My
-   Library → Browse**. Open `/home/deck/Downloads`, select the r2modman AppImage,
-   and choose **Add Selected Programs**.
-7. Return to r2modman.
+6. Return to r2modman. Keep r2modman in Desktop Mode; do not add its AppImage
+   to Steam as a non-Steam game.
 
 This route uses r2modman's own Steam launch instructions; it does not use the
 empty `.forceproton` file workaround.
@@ -165,7 +163,7 @@ other port).
 5. Open it in Notepad, add the one line shown above using the real IP and
    password, then save and close it.
 
-Continue with [Step 5: Start modded and play](#5-start-modded-and-play).
+Continue with [Step 5: Launch modded and play](#5-launch-modded-and-play).
 
 #### Linux desktop PortalPass file
 
@@ -175,7 +173,7 @@ Continue with [Step 5: Start modded and play](#5-start-modded-and-play).
 4. Add the one line shown above using the real IP and password, then save it.
 
 The finished path is `~/.config/portalpass/passwords.env`. Continue with
-[Step 5: Start modded and play](#5-start-modded-and-play).
+[Step 5: Launch modded and play](#5-launch-modded-and-play).
 
 #### Steam Deck PortalPass file
 
@@ -187,9 +185,9 @@ The finished path is `~/.config/portalpass/passwords.env`. Continue with
    line shown above using the real IP and password, and save it.
 
 The finished path is `/home/deck/.config/portalpass/passwords.env`. Continue
-with [Step 5: Start modded and play](#5-start-modded-and-play).
+with [Step 5: Launch modded and play](#5-launch-modded-and-play).
 
-### 5. Start modded and play
+### 5. Launch modded and play
 
 #### Windows and Linux desktop
 
@@ -199,11 +197,13 @@ with [Step 5: Start modded and play](#5-start-modded-and-play).
 #### Steam Deck Game Mode
 
 1. Close r2modman and use the **Return to Gaming Mode** shortcut on the desktop.
-2. Open **Library → Non-Steam**, select **r2modman**, and choose **Play**.
-3. If r2modman shows the profile selection screen, select the imported profile
-   highlighted in blue and click **Select profile** in the lower-left corner.
-4. Click **Start modded** in the upper-left corner. r2modman will start the
-   modded copy of Valheim from inside Game Mode.
+2. Open the normal **Valheim** entry in your Steam Library and choose **Play**.
+3. Steam uses the launch options pasted in Step 2 to start the selected
+   r2modman profile with BepInEx and the imported mods.
+
+Do not launch the r2modman AppImage from Game Mode. It can hang on the Steam
+logo or open to a black screen. r2modman is only used for setup in Desktop Mode;
+Valheim itself is what you launch in Game Mode.
 
 After Valheim starts:
 
