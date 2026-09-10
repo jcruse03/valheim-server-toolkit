@@ -88,14 +88,14 @@ When r2modman shows the profile selection screen, continue with
 3. Open **Dolphin** (the file manager), open **Downloads**, right-click the
    AppImage, choose **Properties → Permissions**, and enable **Is executable**.
 4. Double-click the AppImage, select **Valheim**, and choose **Steam**.
-5. If r2modman displays Steam launch options, click its copy button. Open the
-   Steam desktop app, select **Library → Valheim → gear icon → Properties →
-   General**, click the **Launch Options** box, and paste the copied text.
-6. Return to r2modman. Keep r2modman in Desktop Mode; do not add its AppImage
-   to Steam as a non-Steam game.
+5. In the Steam desktop app, open **Library → Valheim → gear icon → Properties
+   → Compatibility** and make sure **Force the use of a specific Steam Play
+   compatibility tool** is turned off. This setup uses native Linux Valheim,
+   not Proton.
+6. Keep r2modman in Desktop Mode; do not add its AppImage to Steam as a
+   non-Steam game.
 
-This route uses r2modman's own Steam launch instructions; it does not use the
-empty `.forceproton` file workaround.
+This route does not use the empty `.forceproton` file workaround.
 
 When r2modman shows the profile selection screen, continue with
 [Step 3: Import the prepared profile](#3-import-the-prepared-profile) below.
@@ -196,10 +196,27 @@ with [Step 5: Launch modded and play](#5-launch-modded-and-play).
 
 #### Steam Deck Game Mode
 
-1. Close r2modman and use the **Return to Gaming Mode** shortcut on the desktop.
-2. Open the normal **Valheim** entry in your Steam Library and choose **Play**.
-3. Steam uses the launch options pasted in Step 2 to start the selected
-   r2modman profile with BepInEx and the imported mods.
+1. In r2modman, select **Settings**, search for **Change launch behaviour**,
+   choose **Native**, and click **Update**.
+2. Return to the imported profile and click **Start modded** once while still
+   in Desktop Mode. This makes the profile's Linux scripts executable and lets
+   you confirm that BepInEx and the mods appear on Valheim's main menu. Then
+   close Valheim.
+3. Open **Steam → Library → Valheim → gear icon → Properties → General**.
+4. Delete the existing `WINEDLLOVERRIDES=...` text from **Launch Options** and
+   replace it with this complete single line:
+
+```bash
+"/home/deck/.config/r2modmanPlus-local/Valheim/linux_wrapper.sh" %command% --doorstop-enabled true --doorstop-target-assembly "/home/deck/.config/r2modmanPlus-local/Valheim/profiles/Valheim-Jimbo/BepInEx/core/BepInEx.Preloader.dll" --r2profile "Valheim-Jimbo"
+```
+
+5. Close r2modman and use the **Return to Gaming Mode** shortcut on the desktop.
+6. Open the normal **Valheim** entry in your Steam Library and choose **Play**.
+
+The short launch option initially displayed by r2modman only installs its
+wrapper. **Start modded** normally supplies the profile and BepInEx arguments at
+launch time; the complete line above includes those arguments so a direct Game
+Mode launch does not fall back to vanilla Valheim.
 
 Do not launch the r2modman AppImage from Game Mode. It can hang on the Steam
 logo or open to a black screen. r2modman is only used for setup in Desktop Mode;
