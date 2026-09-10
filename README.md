@@ -116,7 +116,7 @@ Stop here; the remaining modded-client steps do not apply on consoles.
 
 1. On Valheim's profile selection screen, choose **Import/Update**.
 2. Choose **Import new profile** and **From code**.
-3. Paste this current profile code: `01a087f1-5ef1-7280-e363-86332c59d362`
+3. Paste this current profile code: `01a08cc3-602d-837d-2d56-4cdad26a89bd`
 4. Complete the import. The profile you just created should be highlighted in
    blue; click it once if it is not.
 5. Click **Select profile** in the lower-left corner.
