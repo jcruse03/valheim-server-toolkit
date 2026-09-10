@@ -83,17 +83,16 @@ When r2modman shows the profile selection screen, continue with
 #### Steam Deck
 
 1. Hold the power button and choose **Switch to Desktop**.
-2. Open Firefox and download the latest Linux **AppImage** from the
-   [official r2modman releases page](https://github.com/ebkr/r2modmanPlus/releases/latest).
-3. Open **Dolphin** (the file manager), open **Downloads**, right-click the
-   AppImage, choose **Properties → Permissions**, and enable **Is executable**.
-4. Double-click the AppImage, select **Valheim**, and choose **Steam**.
+2. Open **Discover** from the taskbar, search for **r2modman**, select it, and
+   click **Install**.
+3. When installation finishes, click **Launch** in Discover. You can reopen it
+   later from the application menu.
+4. In r2modman, select **Valheim** and choose **Steam**.
 5. In the Steam desktop app, open **Library → Valheim → gear icon → Properties
    → Compatibility** and make sure **Force the use of a specific Steam Play
    compatibility tool** is turned off. This setup uses native Linux Valheim,
    not Proton.
-6. Keep r2modman in Desktop Mode; do not add its AppImage to Steam as a
-   non-Steam game.
+6. Keep r2modman in Desktop Mode; do not add it to Steam as a non-Steam game.
 
 This route does not use the empty `.forceproton` file workaround.
 
@@ -116,7 +115,7 @@ Stop here; the remaining modded-client steps do not apply on consoles.
 
 1. On Valheim's profile selection screen, choose **Import/Update**.
 2. Choose **Import new profile** and **From code**.
-3. Paste this current profile code: `01a08cc3-602d-837d-2d56-4cdad26a89bd`
+3. Paste this current profile code: `01a08d15-a31b-20d9-5668-01dda14635a6`
 4. Complete the import. The profile you just created should be highlighted in
    blue; click it once if it is not.
 5. Click **Select profile** in the lower-left corner.
@@ -126,11 +125,15 @@ Stop here; the remaining modded-client steps do not apply on consoles.
 
 ### 4. Set up PortalPass
 
-PortalPass 0.1.2 is already installed and enabled by the prepared profile. Do
-not reinstall or update it.
+PortalPass is intentionally installed separately from the shared profile:
 
-The shared profile contains the original exporter's PortalPass file path, so
-replace it with the correct path for your computer:
+1. Open the **Online** tab in r2modman.
+2. Search for `PortalPass` by `jcruse03`.
+3. Open it, click **Download**, and choose **Download with dependencies**.
+4. Return to **Installed** and confirm PortalPass is enabled.
+
+The shared profile archive still contains the original exporter's PortalPass
+configuration, so replace its file path with the correct path for your computer:
 
 1. Select **Config editor** on the left side of the profile screen.
 2. Search for and open `com.jcruse03.portalpass.cfg`.
@@ -187,40 +190,39 @@ The finished path is `~/.config/portalpass/passwords.env`. Continue with
 The finished path is `/home/deck/.config/portalpass/passwords.env`. Continue
 with [Step 5: Launch modded and play](#5-launch-modded-and-play).
 
-### 5. Launch modded and play
+### 5. Make the normal Steam launch modded
 
-#### Windows and Linux desktop
+Do this once after the game and imported profile are selected in r2modman. It
+lets you launch modded Valheim normally from Steam without opening r2modman
+every time.
 
-1. Return to the imported profile's main screen in r2modman.
-2. Click **Start modded** in the upper-left corner.
+1. On Steam Deck, first open r2modman's **Settings**, search for **Change launch
+   behaviour**, choose **Native**, and click **Update**. Windows and other Linux
+   desktop users can skip this item.
+2. Return to the profile's main screen and click **Start modded** once. Confirm
+   that BepInEx and the mods appear on Valheim's main menu, then close Valheim.
+3. In r2modman, select **Help** on the left and stay on the **General** tab.
+4. Scroll all the way to the bottom to **Launching the game from outside the
+   mod manager**. Click the **Copy launch arguments** button there.
 
-#### Steam Deck Game Mode
+> **Use the bottom Help entry—not the first launch option r2modman shows during
+> Linux setup.** The first option only installs r2modman's wrapper. The Help
+> entry is generated after selecting the game and profile, so it includes the
+> complete BepInEx loader and active-profile arguments.
 
-1. In r2modman, select **Settings**, search for **Change launch behaviour**,
-   choose **Native**, and click **Update**.
-2. Return to the imported profile and click **Start modded** once while still
-   in Desktop Mode. This makes the profile's Linux scripts executable and lets
-   you confirm that BepInEx and the mods appear on Valheim's main menu. Then
-   close Valheim.
-3. Open **Steam → Library → Valheim → gear icon → Properties → General**.
-4. Delete the existing `WINEDLLOVERRIDES=...` text from **Launch Options** and
-   replace it with this complete single line:
+5. Open **Steam → Library → Valheim → gear icon → Properties → General**.
+6. Click the **Launch Options** box, delete anything already in it, and paste
+   the complete line copied from the bottom of r2modman's Help page.
+7. Close r2modman.
 
-```bash
-"/home/deck/.config/r2modmanPlus-local/Valheim/linux_wrapper.sh" %command% --doorstop-enabled true --doorstop-target-assembly "/home/deck/.config/r2modmanPlus-local/Valheim/profiles/Valheim-Jimbo/BepInEx/core/BepInEx.Preloader.dll" --r2profile "Valheim-Jimbo"
-```
+From now on:
 
-5. Close r2modman and use the **Return to Gaming Mode** shortcut on the desktop.
-6. Open the normal **Valheim** entry in your Steam Library and choose **Play**.
-
-The short launch option initially displayed by r2modman only installs its
-wrapper. **Start modded** normally supplies the profile and BepInEx arguments at
-launch time; the complete line above includes those arguments so a direct Game
-Mode launch does not fall back to vanilla Valheim.
-
-Do not launch the r2modman AppImage from Game Mode. It can hang on the Steam
-logo or open to a black screen. r2modman is only used for setup in Desktop Mode;
-Valheim itself is what you launch in Game Mode.
+- Windows and Linux desktop: launch the normal **Valheim** entry in Steam.
+- Steam Deck: use **Return to Gaming Mode**, open the normal **Valheim** entry
+  in the Steam Library, and choose **Play**. Do not launch r2modman in Game Mode;
+  it may hang on the Steam logo or open to a black screen.
+- If you select or rename a different r2modman profile later, repeat this step
+  so Steam's launch arguments point to that profile.
 
 After Valheim starts:
 
@@ -243,7 +245,7 @@ The administrator owns the canonical profile. It currently pins:
 - `denikson-BepInExPack_Valheim` version **5.4.2350**
 - `jcruse03-Cross_Server_Portals_Continued` package version **1.3.2**
   (byte-identical tested 1.3.1 plugin DLL)
-- `jcruse03-PortalPass` version **0.1.2** on clients
+- `jcruse03-PortalPass` version **0.1.2** is added separately on clients
 
 Before publishing a replacement profile code:
 
