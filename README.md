@@ -7,6 +7,7 @@ Reproducible client and Linux dedicated-server setup for a small trusted group u
 - Valheim's built-in crossplay backend
 - BepInExPack for Valheim **5.4.2350**
 - Cross Server Portals Continued **1.3.1**
+- PortalPass **0.1.2** on player clients
 - Valheim's built-in **1.5× resource** world modifier
 - independent worlds, saves, ports, systemd services, and backups per server
 
@@ -15,10 +16,12 @@ Reproducible client and Linux dedicated-server setup for a small trusted group u
 > **Valheim 1.0 validated stack (2026-09-09):** BepInExPack 5.4.2350 and
 > Cross Server Portals Continued 1.3.1 have passed direct joins and two-way
 > portal traversal between the group's Valheim 1.0 servers.
+> PortalPass 0.1.2 has also passed live client tests on Windows and Linux.
 
 ## Player quick start
 
-Use the tested profile below. Do not install, remove, or update individual mods.
+Use the tested profile below. Do not install, remove, or update individual mods
+except for the explicit PortalPass check in Step 4.
 
 ### 1. Install Valheim and run it once
 
@@ -42,7 +45,10 @@ The current release verified while writing this guide was **3.2.19**. A newer of
 
 The portable build also works, but the setup executable is the least confusing option for most players.
 
-#### Linux desktop and Steam Deck
+r2modman will now open the profile selection screen. Continue with
+[Step 3: Import the prepared profile](#3-import-the-prepared-profile) below.
+
+#### Linux desktop
 
 Flatpak is the upstream-recommended path:
 
@@ -60,33 +66,130 @@ chmod +x r2modman-*.AppImage
 ./r2modman-*.AppImage
 ```
 
-Do not run the Windows `.exe` through Wine. If r2modman cannot launch native Valheim and offers the documented Proton workaround, create an empty `.forceproton` file in the Valheim game directory.
+On Arch Linux, the AUR package is also available:
 
-On Steam Deck, switch to Desktop Mode and use the Flatpak commands above. Flatpak is the supported route for Game Mode.
+```bash
+paru -S r2modman-bin
+```
+
+Do not run the Windows `.exe` through Wine and do not create a `.forceproton`
+file for this setup. Start r2modman, select **Valheim**, and choose **Steam**. If
+r2modman shows Steam launch options, copy the text it provides, then open
+**Steam → Library → Valheim → gear icon → Properties → General → Launch
+Options** and paste it there exactly.
+
+When r2modman shows the profile selection screen, continue with
+[Step 3: Import the prepared profile](#3-import-the-prepared-profile) below.
+
+#### Steam Deck
+
+1. Hold the power button and choose **Switch to Desktop**.
+2. Open Firefox and download the latest Linux **AppImage** from the
+   [official r2modman releases page](https://github.com/ebkr/r2modmanPlus/releases/latest).
+3. Open **Dolphin** (the file manager), open **Downloads**, right-click the
+   AppImage, choose **Properties → Permissions**, and enable **Is executable**.
+4. Double-click the AppImage, select **Valheim**, and choose **Steam**.
+5. If r2modman displays Steam launch options, click its copy button. Open the
+   Steam desktop app, select **Library → Valheim → gear icon → Properties →
+   General**, click the **Launch Options** box, and paste the copied text.
+6. Return to r2modman.
+
+This route uses r2modman's own Steam launch instructions; it does not use the
+empty `.forceproton` file workaround.
+
+When r2modman shows the profile selection screen, continue with
+[Step 3: Import the prepared profile](#3-import-the-prepared-profile) below.
 
 #### macOS
 
 r2modman's upstream installation documentation currently publishes Windows and Linux paths, not a supported macOS client. This repository therefore does not claim a working macOS modded-client procedure. A Mac player can use normal Valheim/crossplay if their game edition supports it, but Cross Server Portals should be treated as unavailable until a tested BepInEx/r2modman macOS path exists.
 
+Stop here; the remaining modded-client steps do not apply on macOS.
+
 #### Xbox and other console clients
 
 No client-side BepInEx installation is possible. Console players can join through Valheim crossplay and use ordinary portals, but Cross Server Portals cannot transfer them between servers. They must change servers manually.
 
+Stop here; the remaining modded-client steps do not apply on consoles.
+
 ### 3. Import the prepared profile
 
-1. In r2modman, select **Valheim**.
-2. On the profile selection screen, choose **Import/Update**.
-3. Choose **Import new profile** and **From code**.
-4. Paste this current profile code: `01a087f1-5ef1-7280-e363-86332c59d362`
-5. Complete the import and select the imported profile.
-6. Do **not** use **Update all** or change its mods.
+1. On Valheim's profile selection screen, choose **Import/Update**.
+2. Choose **Import new profile** and **From code**.
+3. Paste this current profile code: `01a087f1-5ef1-7280-e363-86332c59d362`
+4. Complete the import. The profile you just created should be highlighted in
+   blue; click it once if it is not.
+5. Click **Select profile** in the lower-left corner.
+6. r2modman will open that profile's main screen. Do **not** use **Update all**
+   or change its mods.
+7. Continue with [Step 4: Set up PortalPass](#4-set-up-portalpass).
 
-### 4. Play
+### 4. Set up PortalPass
 
-1. Click **Start modded** in r2modman.
-2. Join the server using the name, join code, or public address supplied by the administrator.
-3. Enter the server password supplied privately.
-4. Use the administrator-created portals normally.
+On the profile's **Installed** tab, confirm that **PortalPass** appears and is
+enabled. If it is already there, leave it unchanged. If it is missing:
+
+1. Open the **Online** tab in r2modman.
+2. Search for `PortalPass` by `jcruse03`.
+3. Open it, click **Download**, and choose **Download with dependencies**.
+4. Return to **Installed** and confirm PortalPass is enabled.
+
+This is the only individual mod addition permitted by this quick start.
+
+PortalPass reads a password file that you create and control. For this group's
+servers, add only the shared public server IP and the normal password supplied
+by the administrator. **Leave the port out.** Because every server uses the same
+IP and password, the file needs exactly one line:
+
+```dotenv
+xx.xx.xx.xx = password
+```
+
+Replace `xx.xx.xx.xx` and `password` with the group's real server IP and normal
+server password. Do not add quotation marks, a server name, or `:2459` (or any
+other port).
+
+#### Windows PortalPass file
+
+1. Press **Windows key + R**, enter `%LOCALAPPDATA%`, and press **Enter**.
+2. Create a folder named `PortalPass` and open it.
+3. In File Explorer, enable **View → Show → File name extensions**.
+4. Create a text file named `passwords.env`. Make sure it is not named
+   `passwords.env.txt`.
+5. Open it in Notepad, add the one line shown above using the real IP and
+   password, then save and close it.
+
+Continue with [Step 5: Start modded and play](#5-start-modded-and-play).
+
+#### Linux desktop PortalPass file
+
+1. Open your file manager at **Home** and enable **Show Hidden Files**.
+2. Open `.config`, create a folder named `portalpass`, and open it.
+3. Create a plain-text file named `passwords.env`.
+4. Add the one line shown above using the real IP and password, then save it.
+
+The finished path is `~/.config/portalpass/passwords.env`. Continue with
+[Step 5: Start modded and play](#5-start-modded-and-play).
+
+#### Steam Deck PortalPass file
+
+1. While still in Desktop Mode, open **Dolphin**.
+2. Open **Home**, use the menu to enable **Show Hidden Files**, and open
+   `.config`.
+3. Create a folder named `portalpass` and open it.
+4. Create a text file named `passwords.env`, open it with **Kate**, add the one
+   line shown above using the real IP and password, and save it.
+
+The finished path is `/home/deck/.config/portalpass/passwords.env`. Continue
+with [Step 5: Start modded and play](#5-start-modded-and-play).
+
+### 5. Start modded and play
+
+1. Return to the imported profile's main screen in r2modman.
+2. Click **Start modded** in the upper-left corner.
+3. Join the server using the name, join code, or public address supplied by the administrator.
+4. PortalPass should supply the configured password automatically.
+5. Use the administrator-created portals normally.
 
 That is the complete player setup.
 
@@ -102,6 +205,7 @@ The administrator owns the canonical profile. It currently pins:
 
 - `denikson-BepInExPack_Valheim` version **5.4.2350**
 - `jcruse03-Cross_Server_Portals_Continued` version **1.3.1**
+- `jcruse03-PortalPass` version **0.1.2** on clients
 
 Before publishing a replacement profile code:
 
