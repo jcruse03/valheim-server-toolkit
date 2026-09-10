@@ -6,7 +6,7 @@ Reproducible client and Linux dedicated-server setup for a small trusted group u
 
 - Valheim's built-in crossplay backend
 - BepInExPack for Valheim **5.4.2350**
-- Cross Server Portals Continued **1.3.1**
+- Cross Server Portals Continued package **1.3.2** (tested 1.3.1 plugin DLL)
 - PortalPass **0.1.2** on player clients
 - Valheim's built-in **1.5× resource** world modifier
 - independent worlds, saves, ports, systemd services, and backups per server
@@ -20,8 +20,7 @@ Reproducible client and Linux dedicated-server setup for a small trusted group u
 
 ## Player quick start
 
-Use the tested profile below. Do not install, remove, or update individual mods
-except for the explicit PortalPass check in Step 4.
+Use the tested profile below. Do not install, remove, or update individual mods.
 
 ### 1. Install Valheim and run it once
 
@@ -92,7 +91,10 @@ When r2modman shows the profile selection screen, continue with
 5. If r2modman displays Steam launch options, click its copy button. Open the
    Steam desktop app, select **Library → Valheim → gear icon → Properties →
    General**, click the **Launch Options** box, and paste the copied text.
-6. Return to r2modman.
+6. In the Steam desktop app, select **Games → Add a Non-Steam Game to My
+   Library → Browse**. Open `/home/deck/Downloads`, select the r2modman AppImage,
+   and choose **Add Selected Programs**.
+7. Return to r2modman.
 
 This route uses r2modman's own Steam launch instructions; it does not use the
 empty `.forceproton` file workaround.
@@ -126,15 +128,19 @@ Stop here; the remaining modded-client steps do not apply on consoles.
 
 ### 4. Set up PortalPass
 
-On the profile's **Installed** tab, confirm that **PortalPass** appears and is
-enabled. If it is already there, leave it unchanged. If it is missing:
+PortalPass 0.1.2 is already installed and enabled by the prepared profile. Do
+not reinstall or update it.
 
-1. Open the **Online** tab in r2modman.
-2. Search for `PortalPass` by `jcruse03`.
-3. Open it, click **Download**, and choose **Download with dependencies**.
-4. Return to **Installed** and confirm PortalPass is enabled.
+The shared profile contains the original exporter's PortalPass file path, so
+replace it with the correct path for your computer:
 
-This is the only individual mod addition permitted by this quick start.
+1. Select **Config editor** on the left side of the profile screen.
+2. Search for and open `com.jcruse03.portalpass.cfg`.
+3. Find **SecretFilePath** and set it to the path for your platform:
+   - Windows: `%LOCALAPPDATA%\PortalPass\passwords.env`
+   - Linux desktop: `~/.config/portalpass/passwords.env`
+   - Steam Deck: `/home/deck/.config/portalpass/passwords.env`
+4. Save the configuration.
 
 PortalPass reads a password file that you create and control. For this group's
 servers, add only the shared public server IP and the normal password supplied
@@ -185,11 +191,25 @@ with [Step 5: Start modded and play](#5-start-modded-and-play).
 
 ### 5. Start modded and play
 
+#### Windows and Linux desktop
+
 1. Return to the imported profile's main screen in r2modman.
 2. Click **Start modded** in the upper-left corner.
-3. Join the server using the name, join code, or public address supplied by the administrator.
-4. PortalPass should supply the configured password automatically.
-5. Use the administrator-created portals normally.
+
+#### Steam Deck Game Mode
+
+1. Close r2modman and use the **Return to Gaming Mode** shortcut on the desktop.
+2. Open **Library → Non-Steam**, select **r2modman**, and choose **Play**.
+3. If r2modman shows the profile selection screen, select the imported profile
+   highlighted in blue and click **Select profile** in the lower-left corner.
+4. Click **Start modded** in the upper-left corner. r2modman will start the
+   modded copy of Valheim from inside Game Mode.
+
+After Valheim starts:
+
+1. Join the server using the name, join code, or public address supplied by the administrator.
+2. PortalPass should supply the configured password automatically.
+3. Use the administrator-created portals normally.
 
 That is the complete player setup.
 
@@ -204,7 +224,8 @@ For the planned Valheim 1.0 cutover, follow the [release-day runbook](docs/relea
 The administrator owns the canonical profile. It currently pins:
 
 - `denikson-BepInExPack_Valheim` version **5.4.2350**
-- `jcruse03-Cross_Server_Portals_Continued` version **1.3.1**
+- `jcruse03-Cross_Server_Portals_Continued` package version **1.3.2**
+  (byte-identical tested 1.3.1 plugin DLL)
 - `jcruse03-PortalPass` version **0.1.2** on clients
 
 Before publishing a replacement profile code:
