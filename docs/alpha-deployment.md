@@ -2,7 +2,31 @@
 
 Last verified: **2026-09-17**
 
-## September 17 Kujamaton-only update
+## September 17 full rollout after canary approval
+
+Jim confirmed Kujamaton worked and explicitly approved the remaining rollout.
+Satropolis, Randleton, Lumiland, and Everville were then updated sequentially to
+build `25364309`, Valheim `l-1.0.14` (network `40`). Each instance was stopped
+before its maintenance update, backed up, verified, and restarted. Kujamaton
+remained running throughout.
+
+All five services are active. Each newly updated instance loaded Cross Server
+Portals `1.3.1`, loaded its world, connected, and registered its online session.
+No exception or missing-method error appeared in the inspected startup logs.
+These are server-side checks; individual client joins and cross-server travel
+were not exercised by the assistant.
+
+Verified pre-update application-state backups:
+
+- Satropolis: `valheim2-20260917-095744-pre-update.tar.gz`
+- Randleton: `valheim3-20260917-095811-pre-update.tar.gz`
+- Lumiland: `valheim4-20260917-095837-pre-update.tar.gz`
+- Everville: `valheim5-20260917-095903-pre-update.tar.gz`
+
+All four SHA-256 sidecars passed independent verification. Existing known-working
+pointers were retained. No mod code/package change was necessary.
+
+## September 17 initial Kujamaton-only update (gate subsequently cleared)
 
 The sections below this update record preserve the historical September 9 deployment;
 their inactive/staged descriptions are not current live state.
