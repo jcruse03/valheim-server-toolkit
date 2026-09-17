@@ -1,6 +1,40 @@
 # Alpha deployment record
 
-Last verified: **2026-09-09**
+Last verified: **2026-09-17**
+
+## September 17 Kujamaton-only update
+
+The sections below this update record preserve the historical September 9 deployment;
+their inactive/staged descriptions are not current live state.
+
+- Updated **only Kujamaton** from Steam build `25253791` to `25364309`,
+  Valheim `l-1.0.14` (network version `40`).
+- Stopped `valheim.service` gracefully before maintenance. Created and verified
+  `valheim-20260917-094907-pre-update.tar.gz` under the instance backup directory.
+  This is an application-state backup, not a complete old game-binary image;
+  it was **not** marked known-working.
+- Reinstalled checksum-pinned BepInEx `5.4.2350` and Cross Server Portals `1.3.1`.
+  Static installation verification passed. The service restarted at 09:50 EDT;
+  the plugin chainloader completed, 19,625 world ZDOs loaded, and the game server
+  connected and registered its session.
+- Startup contains Unity resource-upload/video/shader errors. No plugin exception
+  was observed in the inspected startup log; gameplay is not yet validated.
+- Cross Server Portals and PortalPass built and packaged successfully against the
+  updated dedicated-server managed assemblies: 16 and 14 unit tests passed.
+  Toolkit syntax, maintenance tests, and ShellCheck also passed.
+- The published Thunderstore Cross Server Portals `1.3.2` package contains the
+  same DLL as deployed `1.3.1` (SHA-256
+  `6db2033a07f860c3f116d5bc57b520a938e0776569a8880da47c7dcafb1886da`).
+  PortalPass remains published at `0.1.2`. No code change or new mod package was
+  warranted by these checks.
+- Satropolis, Randleton, Lumiland, and Everville remained active with unchanged
+  September 11 service start timestamps. No maintenance was performed on them.
+- **Rollout gate:** Jim must confirm client login and gameplay on Kujamaton before
+  any other server is updated. Cross-server travel to older servers may fail due
+  to game/network version differences; do not update them to bypass this gate.
+  Client-side PortalPass behavior and full portal traversal remain unverified.
+
+## Historical September 9 record
 
 This file records non-secret deployment state for the current `alpha` host. Passwords, join codes, public IP addresses, saves, BepInEx binaries, and backup archives are intentionally excluded from Git.
 
