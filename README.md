@@ -18,6 +18,14 @@ Reproducible client and Linux dedicated-server setup for a small trusted group u
 > portal traversal between the group's Valheim 1.0 servers.
 > PortalPass 0.1.2 has also passed live client tests on Windows and Linux.
 
+> **Server maintenance 2026-10-28:** All five alpha servers were updated to Steam build
+> 26266951 (Valheim l-1.0.21, network 41), BepInExPack 5.4.2351 and Continued
+> package 1.3.2 (unchanged 1.3.1 DLL). See the [rollout evidence](docs/alpha-rollout-2026-10-28.md).
+> Players need the matching game version. The older profile/gameplay validation
+> below is historical: client joins, PortalPass and portal traversal on this new
+> stack have not been retested. PortalPass 0.1.2 remains client-only; do not install
+> it on servers. No replacement client profile was published by this maintenance.
+
 ## Player quick start
 
 Use the tested profile below. Do not install, remove, or update individual mods.
