@@ -243,6 +243,10 @@ install_mod_stack() {
   [[ -d "$bepinex_source/BepInEx/core" ]] || die "Unexpected BepInEx archive layout"
 
   log "Installing BepInExPack $BEPINEX_VERSION"
+  # Package defaults must not overwrite administrator-owned configuration.
+  if [[ -d "$SERVER_DIR/BepInEx/config" ]]; then
+    cp -a "$SERVER_DIR/BepInEx/config/." "$bepinex_source/BepInEx/config/"
+  fi
   cp -a "$bepinex_source/." "$SERVER_DIR/"
   chmod u+x "$SERVER_DIR/start_server_bepinex.sh" "$SERVER_DIR/start_game_bepinex.sh"
 

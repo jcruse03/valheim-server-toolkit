@@ -1,8 +1,8 @@
 # Pinned and checksum-verified Thunderstore packages.
 # Update versions and checksums together, then test before deployment.
-BEPINEX_VERSION="5.4.2350"
-BEPINEX_SHA256="37a91c000b4e88f2ed7a4bd7d812239852d2e36cbf0ff0a9f5faacfba46b105f"
+BEPINEX_VERSION="5.4.2351"
+BEPINEX_SHA256="bce631497976a93977ceb08e166712e6c31d15244956f89f17df092a9b62e29f"
 PORTAL_NAMESPACE="jcruse03"
 PORTAL_PACKAGE="Cross_Server_Portals_Continued"
-PORTAL_VERSION="1.3.1"
-PORTAL_SHA256="427b9e523101979ee65debf3a2893bda4b27a606aab32adf04fd50da10317707"
+PORTAL_VERSION="1.3.2"
+PORTAL_SHA256="a9f14f6a76ee6ebd2ba75a764b1af7af5ce6e1d24cde40703b9b381d20d13e91"
